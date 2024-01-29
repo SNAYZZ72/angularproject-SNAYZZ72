@@ -2,7 +2,7 @@
 
 <H1>VERSION V16</H1>
 
-<div *ngFor="let assignment of assignments" [ngClass]="{'rendu':assignment.rendu, 'nonRendu': !assignment.rendu}">
+<div appRendu *ngFor="let assignment of assignments" [ngClass]="{'rendu':assignment.rendu, 'nonRendu': !assignment.rendu}">
   <p *ngIf="assignment.rendu; else nonsoumis">
     Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
     et a été rendu.

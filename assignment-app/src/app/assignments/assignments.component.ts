@@ -1,10 +1,11 @@
 import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RenduDirective } from '../../shared/rendu.directive';
 
 @Component({
   selector: 'app-assignments',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RenduDirective],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.css'
 })
