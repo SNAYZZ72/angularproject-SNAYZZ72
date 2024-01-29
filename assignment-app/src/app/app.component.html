@@ -1,3 +1,31 @@
-<H1>Mes devoirs à faire</H1>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="opened=!opened" aria-label="Menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>My App</span>
+        <span class="spacer"></span>
+        <button mat-icon-button aria-label="Home">
+            <mat-icon>home</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Login">
+            <mat-icon>login</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
 
-<app-assignments></app-assignments>
+<mat-sidenav-container>
+    <mat-sidenav [(opened)]="opened" mode="side">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/devoirs" routerLinkActive="active">Liste des devoirs</a>
+            <a mat-list-item routerLink="/devoirs/add" routerLinkActive="active">Ajout d'un devoir</a>
+            <a mat-list-item routerLink="/devoirs/edit" routerLinkActive="active">Modification d'un devoir</a>
+            <a mat-list-item routerLink="/devoirs/delete" routerLinkActive="active">Suppression d'un devoir</a>
+            <a mat-list-item routerLink="/devoirs/generate" routerLinkActive="active">Génération de données de test</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+        <app-assignments></app-assignments>
+    </mat-sidenav-content>
+</mat-sidenav-container>
