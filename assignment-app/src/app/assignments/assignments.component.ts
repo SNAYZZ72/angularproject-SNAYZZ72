@@ -7,12 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {Assignment} from "./assignement.model";
 
 
 @Component({
   selector: 'app-assignments',
   standalone: true,
-  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule],
+  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.css'
 })
@@ -25,13 +27,20 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.nomDevoir)
+    console.log("Devoir ajouté")
+
+    const newAssignment = new Assignment()
+    newAssignment.nom = this.nomDevoir
+    newAssignment.dateDeRendu = this.dateDeRendu
+    newAssignment.rendu = false
+    this.assignments.push(newAssignment)
   }
 
   titre = 'mon application sur les assignments'
   ajoutActive = false
-  nomDevoir = ''
-  assignments = [
+  nomDevoir!: string
+  dateDeRendu!: Date
+  assignments : Assignment[]= [
     {
       nom: 'TP Angular 1',
       dateDeRendu: new Date('2024-01-31'),
