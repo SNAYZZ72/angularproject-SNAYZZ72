@@ -1,35 +1,29 @@
-<p>Titre = {{titre}}</p>
 
-<H1>VERSION V16</H1>
+<p>{{titre}}</p>
 
-<div appRendu *ngFor="let assignment of assignments" [ngClass]="{'rendu':assignment.rendu, 'nonRendu': !assignment.rendu}">
-  <p *ngIf="assignment.rendu; else nonsoumis">
-    Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
-    et a été rendu.
-  </p>
-  <ng-template #nonsoumis>
-    <p>
-      Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
-      et n'a pas été rendu.
-    </p>
-  </ng-template>
-</div>
-
-<H1>VERSION V17</H1>
+<form ngForm (submit)="onSubmit()" #assignmentForm class="form">
+    <mat-form-field>
+        <input matInput [(ngModel)]="nomDevoir"  name="nom">
+    </mat-form-field>
+    <p>{{nomDevoir}}</p>
+    <button [disabled]="!ajoutActive" mat-stroked-button color="primary">
+        Ajouter un devoir
+    </button>
+</form>
 
 @for (assignment of assignments; track assignment.nom) {
-  <div [ngClass]="{'rendu':assignment.rendu, 'nonRendu': !assignment.rendu}">
-    @if (assignment.rendu) {
-      <p>
-        Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
-        et a été rendu.
-      </p>
-    }
-    @else {
-      <p>
-        Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
-        et n'a pas été rendu.
-      </p>
-    }
-  </div>
+    <div [ngClass]="{'rendu':assignment.rendu, 'nonRendu': !assignment.rendu}">
+        @if (assignment.rendu) {
+            <p appRendu>
+                Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
+                et a été rendu.
+            </p>
+        }
+        @else {
+            <p>
+                Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu }},
+                et n'a pas été rendu.
+            </p>
+        }
+    </div>
 }
