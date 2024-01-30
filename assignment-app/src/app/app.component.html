@@ -8,9 +8,14 @@
         <button mat-icon-button aria-label="Home">
             <mat-icon>home</mat-icon>
         </button>
+      <span class="spacer"></span>
         <button mat-icon-button aria-label="Login">
             <mat-icon>login</mat-icon>
         </button>
+      <span>
+    <mat-slide-toggle [formControl]="switchTheme">Dark Mode</mat-slide-toggle
+    >
+  </span>
     </mat-toolbar-row>
 </mat-toolbar>
 
