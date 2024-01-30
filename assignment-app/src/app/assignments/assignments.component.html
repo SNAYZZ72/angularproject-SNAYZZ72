@@ -1,42 +1,37 @@
 
-<p>{{titre}}</p>
+<main class="container">
 
-<form ngForm (submit)="onSubmit(); assignmentForm.reset()" #assignmentForm class="form">
-    <mat-form-field>
-        <input matInput [(ngModel)]="nomDevoir" placeholder="saisir le nom du devoir" required  name="nom">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="dateDeRendu" placeholder="saisir la date de rendu" required  name="date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <button [disabled]="!ajoutActive" mat-stroked-button color="primary">
-        Ajouter un devoir
-    </button>
-</form>
+  @if (!formVisible) {
+    <button mat-flat-button color="accent" (click)="onAddAssignment()" class="ajouterBtn">Ajouter assignment</button>
 
-<h2>Liste des devoirs</h2>
+    <h2>Liste des devoirs</h2>
 
-@for (assignment of assignments; track assignment.nom) {
-    <mat-list>
+    @for (assignment of assignments; track assignment.nom) {
+      <mat-list>
         <h3 mat-subheader>{{assignment.dateDeRendu | date}}</h3>
         <mat-list-item (click)="assignmentClique(assignment)">
-            @if (assignment.rendu) {
-                <p appRendu>
-                    Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu | date }},
-                    et a été rendu.
-                </p>
-            }
-            @else {
-                <p>
-                    Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu | date }},
-                    et n'a pas été rendu.
-                </p>
-            }
+          @if (assignment.rendu) {
+            <p appRendu>
+              Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu | date }},
+              et a été rendu.
+            </p>
+          }
+          @else {
+            <p>
+              Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu | date }},
+              et n'a pas été rendu.
+            </p>
+          }
 
         </mat-list-item>
         <mat-divider></mat-divider>
-    </mat-list>
-}
+      </mat-list>
+    }
 
-<app-assignment-detail [assignmentTransmis]="assignmentSelectionne">  </app-assignment-detail>
+    <app-assignment-detail [assignmentTransmis]="assignmentSelectionne" (deleteRequest)="handleDelete($event)">  </app-assignment-detail>
+  }
+  @else {
+    <app-add-assignment (newAssignmentEvent)="onNouvelAssignment($event)"> </app-add-assignment>
+  }
+
+</main>

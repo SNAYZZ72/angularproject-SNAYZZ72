@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output , EventEmitter} from '@angular/core';
 import {Assignment} from "../assignement.model";
-import {MatCard, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
+import {MatCard, MatCardActions, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {DatePipe} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {MatButton} from "@angular/material/button";
 
 
 @Component({
@@ -14,13 +15,16 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatCardTitle,
     MatCardSubtitle,
     DatePipe,
-    MatCheckbox
+    MatCheckbox,
+    MatCardActions,
+    MatButton
   ],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent implements OnInit {
   @Input() assignmentTransmis !: Assignment;
+  @Output() deleteRequest = new EventEmitter<Assignment>();
 
   constructor() { }
 
@@ -32,4 +36,8 @@ export class AssignmentDetailComponent implements OnInit {
     this.assignmentTransmis.rendu = true
   }
 
+  onDeleteAssignment() {
+    console.log("Demande de suppression de l'assignment !");
+    this.deleteRequest.emit(this.assignmentTransmis);
+  }
 }

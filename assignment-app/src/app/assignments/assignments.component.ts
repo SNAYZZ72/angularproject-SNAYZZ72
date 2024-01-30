@@ -9,34 +9,32 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
+
 import { RenduDirective } from '../../shared/rendu.directive';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import {Assignment} from "./assignement.model";
+import {AddAssignmentComponent} from "./add-assignment/add-assignment.component";
 
 @Component({
   selector: 'app-assignments',
   standalone: true,
-  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, AssignmentDetailComponent, MatListModule, MatDividerModule],
+  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, AssignmentDetailComponent, MatListModule, MatDividerModule, AddAssignmentComponent],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.css'
 })
 export class AssignmentsComponent implements OnInit {
-
   ngOnInit(): void {
-    setTimeout( () => {
-      this.ajoutActive = true
-    }, 2000);
   }
 
-  onSubmit() {
-    console.log("Devoir ajouté")
-
-    const newAssignment = new Assignment()
-    newAssignment.nom = this.nomDevoir
-    newAssignment.dateDeRendu = this.dateDeRendu
-    newAssignment.rendu = false
-    this.assignments.push(newAssignment)
+  onAddAssignment() {
+    this.formVisible = true
   }
+
+  onNouvelAssignment(event: Assignment) {
+    this.assignments.push(event)
+    this.formVisible = false
+  }
+
 
   assignmentClique(assignment: Assignment) {
     this.assignmentSelectionne = assignment
@@ -44,10 +42,19 @@ export class AssignmentsComponent implements OnInit {
   }
 
   titre = 'mon application sur les assignments'
-  ajoutActive = false
-  nomDevoir!: string
-  dateDeRendu!: Date
+  formVisible = false
+
+
   assignmentSelectionne!: Assignment
+
+  handleDelete(assignment: Assignment) {
+    console.log('Suppression de l\'assignment', assignment.nom);
+    const index = this.assignments.indexOf(assignment);
+    this.assignments.splice(index, 1);
+
+    //enlever la selection
+    this.assignmentSelectionne = this.assignments[-1];
+  }
 
   assignments : Assignment[]= [
     {
