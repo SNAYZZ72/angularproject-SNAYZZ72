@@ -4,6 +4,7 @@ import {MatCard, MatCardActions, MatCardContent, MatCardSubtitle, MatCardTitle} 
 import {DatePipe} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
+import {AssignmentsService} from "../../shared/assignments.service";
 
 
 @Component({
@@ -23,21 +24,37 @@ import {MatButton} from "@angular/material/button";
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent implements OnInit {
-  @Input() assignmentTransmis !: Assignment;
+  @Input() assignmentTransmis !: Assignment ;
   @Output() deleteRequest = new EventEmitter<Assignment>();
 
-  constructor() { }
+  constructor(private assignmentsService: AssignmentsService) { }
 
   ngOnInit(): void {
   }
 
   onAssignmentRendu() {
-    console.log("Assignment devient rendu chez le composant fils!");
     this.assignmentTransmis.rendu = true
+
+    this.assignmentsService.updateAssignment(this.assignmentTransmis)
+      .subscribe(message => {
+        console.log(message);
+      });
+
+    console.log(this.assignmentTransmis.rendu)
   }
 
-  onDeleteAssignment() {
+/*  onDeleteAssignment() {
     console.log("Demande de suppression de l'assignment !");
     this.deleteRequest.emit(this.assignmentTransmis);
+  }*/
+
+  onDelete(){
+    this.assignmentsService.deleteAssignment(this.assignmentTransmis)
+      .subscribe(message => {
+        console.log(message);
+      });
+
+    this.assignmentTransmis = null;
   }
+
 }

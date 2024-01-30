@@ -10,10 +10,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 
-import { RenduDirective } from '../../shared/rendu.directive';
+import { RenduDirective } from '../shared/rendu.directive';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import {Assignment} from "./assignement.model";
 import {AddAssignmentComponent} from "./add-assignment/add-assignment.component";
+import {AssignmentsService} from "../shared/assignments.service";
+import {Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-assignments',
@@ -24,6 +26,15 @@ import {AddAssignmentComponent} from "./add-assignment/add-assignment.component"
 })
 export class AssignmentsComponent implements OnInit {
   ngOnInit(): void {
+    //this.assignments= this.assignmentsService.getAssignments();
+    this.getAssignments();
+  }
+  getAssignments(): void {
+    this.assignmentsService.getAssignments()
+      .subscribe(assignments => this.assignments = assignments);
+  }
+
+  constructor(private assignmentsService: AssignmentsService) {
   }
 
   onAddAssignment() {
@@ -31,10 +42,15 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onNouvelAssignment(event: Assignment) {
-    this.assignments.push(event)
-    this.formVisible = false
-  }
+    //this.assignments.push(event)
+    this.assignmentsService.addAssignment(event)
+      .subscribe(message => {
+        console.log(message);
+      });
 
+    this.formVisible = false
+    this.assignmentSelectionne = null;
+  }
 
   assignmentClique(assignment: Assignment) {
     this.assignmentSelectionne = assignment
@@ -43,35 +59,19 @@ export class AssignmentsComponent implements OnInit {
 
   titre = 'mon application sur les assignments'
   formVisible = false
+  assignments: Assignment[] = []
 
 
   assignmentSelectionne!: Assignment
 
-  handleDelete(assignment: Assignment) {
+/*  handleDelete(assignment: Assignment) {
     console.log('Suppression de l\'assignment', assignment.nom);
     const index = this.assignments.indexOf(assignment);
     this.assignments.splice(index, 1);
 
     //enlever la selection
     this.assignmentSelectionne = this.assignments[-1];
-  }
+  }*/
 
-  assignments : Assignment[]= [
-    {
-      nom: 'TP Angular 1',
-      dateDeRendu: new Date('2024-01-31'),
-      rendu: true
-    },
-    {
-      nom: 'TP Angular 2',
-      dateDeRendu: new Date('2024-01-07'),
-      rendu: false
-    },
-    {
-      nom: 'TP Angular 3',
-      dateDeRendu: new Date('2024-02-14'),
-      rendu: false
-    }
-  ]
 
 }

@@ -28,7 +28,7 @@
       </mat-list>
     }
 
-    <app-assignment-detail [assignmentTransmis]="assignmentSelectionne" (deleteRequest)="handleDelete($event)">  </app-assignment-detail>
+    <app-assignment-detail [assignmentTransmis]="assignmentSelectionne" >  </app-assignment-detail>
   }
   @else {
     <app-add-assignment (newAssignmentEvent)="onNouvelAssignment($event)"> </app-add-assignment>
