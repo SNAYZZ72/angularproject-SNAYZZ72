@@ -5,6 +5,8 @@ import {DatePipe} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import {AssignmentsService} from "../../shared/assignments.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {AuthService} from "../../shared/auth.service";
 
 
 @Component({
@@ -24,23 +26,38 @@ import {AssignmentsService} from "../../shared/assignments.service";
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent implements OnInit {
-  @Input() assignmentTransmis !: Assignment ;
-  @Output() deleteRequest = new EventEmitter<Assignment>();
+  //@Input() assignmentTransmis !: Assignment ;
+  //@Output() deleteRequest = new EventEmitter<Assignment>();
 
-  constructor(private assignmentsService: AssignmentsService) { }
+  assignmentTransmis !: Assignment;
+
+  constructor(private assignmentsService: AssignmentsService,
+             private  activatedRoute: ActivatedRoute,
+             private router: Router,
+             private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.getAssignment()
   }
 
+  getAssignment(): void {
+    const id = Number(this.activatedRoute.snapshot.params['id']);
+    this.assignmentsService.getAssignment(id)
+      .subscribe(a => {
+        if (a) {
+          this.assignmentTransmis = a;
+        }
+      });
+  }
   onAssignmentRendu() {
-    this.assignmentTransmis.rendu = true
+    this.assignmentTransmis.rendu = true;
 
     this.assignmentsService.updateAssignment(this.assignmentTransmis)
       .subscribe(message => {
         console.log(message);
       });
 
-    console.log(this.assignmentTransmis.rendu)
+    this.router.navigate(['/home'])
   }
 
 /*  onDeleteAssignment() {
@@ -48,13 +65,33 @@ export class AssignmentDetailComponent implements OnInit {
     this.deleteRequest.emit(this.assignmentTransmis);
   }*/
 
-  onDelete(){
+  onDelete() {
+    /*    this.assignmentsService.deleteAssignment(this.assignmentTransmis)
+          .subscribe(message => {
+            console.log(message);
+          });
+
+        this.assignmentTransmis = null;
+      }*/
     this.assignmentsService.deleteAssignment(this.assignmentTransmis)
       .subscribe(message => {
         console.log(message);
       });
+    this.router.navigate(['/home'])
+  }
 
-    this.assignmentTransmis = null;
+  onClickEdit() {
+    this.router.navigate(
+      ['/assignment', this.assignmentTransmis.id, 'edit'],
+      {
+        queryParams: { nom: this.assignmentTransmis.nom },
+        fragment: 'edition'
+      }
+    );
+  }
+
+  isAdmin() {
+    return this.authService.loggedIn;
   }
 
 }

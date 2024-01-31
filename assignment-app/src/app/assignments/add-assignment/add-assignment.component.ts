@@ -1,10 +1,18 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
 import {MatFormField, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {Assignment} from "../assignement.model";
+import {AssignmentsService} from "../../shared/assignments.service";
+import {Router} from "@angular/router";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @Component({
   selector: 'app-add-assignment',
@@ -13,20 +21,25 @@ import {Assignment} from "../assignement.model";
     FormsModule,
     MatButton,
     MatDatepicker,
-    MatDatepickerInput,
+    MatDatepickerModule,
     MatDatepickerToggle,
+    MatNativeDateModule,
     MatFormField,
     MatInput,
     MatSuffix
+  ],
+  providers: [
+    MatNativeDateModule
   ],
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css'
 })
 export class AddAssignmentComponent {
-  @Output() newAssignmentEvent = new EventEmitter<Assignment>
+  //@Output() newAssignmentEvent = new EventEmitter<Assignment>
   nomDevoir !: string
   dateDeRendu !: Date
 
+  constructor(private assignmentsService: AssignmentsService, private router: Router) { }
   onSubmit() {
     console.log("Devoir ajouté")
 
@@ -35,8 +48,14 @@ export class AddAssignmentComponent {
     newAssignment.dateDeRendu = this.dateDeRendu
     newAssignment.rendu = false
     //this.assignments.push(newAssignment)
+    //this.newAssignmentEvent.emit(newAssignment)
 
-    this.newAssignmentEvent.emit(newAssignment)
+    this.assignmentsService.addAssignment(newAssignment)
+      .subscribe(message => {
+        console.log(message);
+      });
+
+    this.router.navigate(['/home']);
   }
 
 }

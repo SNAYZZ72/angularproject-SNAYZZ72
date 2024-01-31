@@ -16,11 +16,12 @@ import {Assignment} from "./assignement.model";
 import {AddAssignmentComponent} from "./add-assignment/add-assignment.component";
 import {AssignmentsService} from "../shared/assignments.service";
 import {Observable, of} from "rxjs";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-assignments',
   standalone: true,
-  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, AssignmentDetailComponent, MatListModule, MatDividerModule, AddAssignmentComponent],
+  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, AssignmentDetailComponent, MatListModule, MatDividerModule, AddAssignmentComponent, RouterLink],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.css'
 })
@@ -37,7 +38,7 @@ export class AssignmentsComponent implements OnInit {
   constructor(private assignmentsService: AssignmentsService) {
   }
 
-  onAddAssignment() {
+  /*onAddAssignment() {
     this.formVisible = true
   }
 
@@ -55,14 +56,14 @@ export class AssignmentsComponent implements OnInit {
   assignmentClique(assignment: Assignment) {
     this.assignmentSelectionne = assignment
     console.log("Assignment cliqué : " + assignment.nom)
-  }
+  }*/
 
   titre = 'mon application sur les assignments'
-  formVisible = false
+  /*formVisible = false*/
   assignments: Assignment[] = []
 
 
-  assignmentSelectionne!: Assignment
+  /*assignmentSelectionne!: Assignment*/
 
 /*  handleDelete(assignment: Assignment) {
     console.log('Suppression de l\'assignment', assignment.nom);

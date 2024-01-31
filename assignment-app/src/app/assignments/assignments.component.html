@@ -1,15 +1,18 @@
-
 <main class="container">
 
-  @if (!formVisible) {
-    <button mat-flat-button color="accent" (click)="onAddAssignment()" class="ajouterBtn">Ajouter assignment</button>
+  <div class="routerBtn">
+    <a routerLink="/add">
+      <button mat-flat-button color="accent">
+        Ajouter assignment
+      </button>
+    </a>
+  </div>
 
-    <h2>Liste des devoirs</h2>
-
-    @for (assignment of assignments; track assignment.nom) {
-      <mat-list>
+  @for (assignment of assignments; track assignment.nom) {
+    <mat-list>
+      <nav><a routerLink="/assignment/{{assignment.id}}">
         <h3 mat-subheader>{{assignment.dateDeRendu | date}}</h3>
-        <mat-list-item (click)="assignmentClique(assignment)">
+        <mat-list-item>
           @if (assignment.rendu) {
             <p appRendu>
               Le devoir {{assignment.nom}} est à rendre avant le {{assignment.dateDeRendu | date }},
@@ -24,14 +27,8 @@
           }
 
         </mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-list>
-    }
-
-    <app-assignment-detail [assignmentTransmis]="assignmentSelectionne" >  </app-assignment-detail>
+      </a></nav>
+      <mat-divider></mat-divider>
+    </mat-list>
   }
-  @else {
-    <app-add-assignment (newAssignmentEvent)="onNouvelAssignment($event)"> </app-add-assignment>
-  }
-
 </main>

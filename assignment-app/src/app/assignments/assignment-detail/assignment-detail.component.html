@@ -12,7 +12,13 @@
       @if (!assignmentTransmis.rendu) {
         <mat-checkbox (click)="onAssignmentRendu()">Devoir rendu</mat-checkbox>
       }
-        <button mat-flat-button color="warn" (click)="onDelete()">Supprimer</button>
+        <button mat-stroked-button color="primary"
+                (click)="onClickEdit()"
+                [disabled]="!isAdmin()"
+        >
+          EDIT
+        </button>
+        <button mat-flat-button color="warn" (click)="onDelete()">Delete</button>
       </mat-card-actions>
     </mat-card-content>
   </mat-card>
