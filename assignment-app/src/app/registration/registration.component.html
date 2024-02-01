@@ -1,0 +1,24 @@
+<div class="registration-container">
+  <mat-card class="registration-card">
+    <mat-card-header>
+      <mat-card-title>Inscription</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="registrationForm" (ngSubmit)="onRegister()" class="registration-form">
+        <mat-form-field appearance="fill" class="registration-field">
+          <mat-label>Login</mat-label>
+          <input matInput formControlName="login">
+          <mat-error *ngIf="registrationForm.get('login').errors?.['required']">Login est requis</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="registration-field">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+          <mat-error *ngIf="registrationForm.get('password').errors?.['required']">Mot de passe est requis</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="submit-button">S'inscrire</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

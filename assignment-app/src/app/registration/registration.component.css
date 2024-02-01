@@ -1,0 +1,21 @@
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.registration-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.submit-button {
+  width: 100%;
+}

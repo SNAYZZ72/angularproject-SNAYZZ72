@@ -6,16 +6,19 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const authentifie = await authService.isAdmin();
-  if (authentifie) {
-    console.log('vous ête admin, vous pouvez passer');
-    return true;
-  } else {
-    console.log('vous n\'êtes pas admin, vous ne pouvez pas passer');
+  const requiredRole = route.data['role'] as 'user' | 'admin';
+  const isLogged = authService.isLogged();
+  const isAdmin = await authService.isAdmin();
+
+  if (!isLogged) {
+    console.log('vous n\'êtes pas connecté, redirection vers la page de connexion');
+    router.navigate(['/login']);
+    return false;
+  } else if (requiredRole === 'admin' && !isAdmin) {
+    console.log('vous n\'êtes pas admin, accès refusé');
     router.navigate(['/home']);
     return false;
   }
 
+  return true;
 };
-
-

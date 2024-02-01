@@ -5,6 +5,7 @@ import {AssignmentDetailComponent} from "./assignments/assignment-detail/assignm
 import {EditAssignmentComponent} from "./edit-assignment/edit-assignment.component";
 import {authGuard} from "./shared/auth.guard";
 import {LoginComponent} from "./login/login.component";
+import {RegistrationComponent} from "./registration/registration.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'add', component: AddAssignmentComponent, canActivate: [authGuard], data: { role: 'user' } },
   { path: 'assignment/:id', component: AssignmentDetailComponent, canActivate: [authGuard], data: { role: 'user' } },
   { path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard], data: { role: 'admin' } },
-  {path: 'login', component: LoginComponent }
+  {path: 'login', component: LoginComponent },
+  {path: 'register', component: RegistrationComponent}
 
 ];

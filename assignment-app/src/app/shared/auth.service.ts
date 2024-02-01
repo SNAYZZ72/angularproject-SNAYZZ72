@@ -1,33 +1,3 @@
-/*
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
-  loggedIn = false;
-
-  logIn() {
-    this.loggedIn = true;
-  }
-
-  logOut() {
-    this.loggedIn = false;
-  }
-
-  isAdmin() {
-    const isUserAdmin = new Promise(
-      (resolve, reject) => {
-        resolve(this.loggedIn);
-      }
-    );
-    return isUserAdmin;
-  }
-
-  constructor() { }
-}
-*/
-
 import { Injectable } from '@angular/core';
 
 interface User {
@@ -47,6 +17,17 @@ export class AuthService {
   currentUser: User | null = null;
 
   constructor() { }
+
+  register(login: string, password: string): boolean {
+    const userExists = this.users.some(user => user.login === login);
+
+    if (userExists) {
+      return false;
+    }
+
+    this.users.push({ login, password, role: 'user' });
+    return true;
+  }
 
   logIn(login: string, password: string): boolean {
     const user = this.users.find(user => user.login === login && user.password === password);

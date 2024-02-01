@@ -9,6 +9,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../shared/auth.service";
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from "@angular/material/dialog";
+import {MatHint} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-assignment-detail',
@@ -23,7 +24,8 @@ import {MatDialog} from "@angular/material/dialog";
     MatCardActions,
     MatButton,
     NgIf,
-    MatIconModule
+    MatIconModule,
+    MatHint
   ],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
@@ -32,14 +34,21 @@ export class AssignmentDetailComponent implements OnInit {
 
   assignmentTransmis !: Assignment;
 
+
+
+
   constructor(private assignmentsService: AssignmentsService,
-             private  activatedRoute: ActivatedRoute,
-             private router: Router,
-             private authService: AuthService,
+              private  activatedRoute: ActivatedRoute,
+              private router: Router,
+              protected authService: AuthService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAssignment()
+    this.authService.isAdmin().then(isAdmin => {
+      // @ts-ignore
+      this.isAdmin = isAdmin;
+    });
   }
 
   getAssignment(): void {

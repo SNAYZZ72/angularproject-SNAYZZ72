@@ -6,16 +6,16 @@
   </mat-toolbar>
 
   <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="assignments" class="mat-elevation-z8">
+    <table mat-table [dataSource]="assignments"  matSort class="mat-elevation-z8">
       <!-- Colonne Date de Rendu -->
       <ng-container matColumnDef="dateDeRendu">
-        <th mat-header-cell *matHeaderCellDef>Date de Rendu</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="dateDeRendu">Date de Rendu</th>
         <td mat-cell *matCellDef="let assignment">{{assignment.dateDeRendu | date}}</td>
       </ng-container>
 
       <!-- Colonne Nom -->
       <ng-container matColumnDef="nom">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="nom">Nom</th>
         <td mat-cell *matCellDef="let assignment">
           <a routerLink="/assignment/{{assignment.id}}">{{assignment.nom}}</a>
         </td>
@@ -23,7 +23,7 @@
 
       <!-- Colonne État -->
       <ng-container matColumnDef="etat">
-        <th mat-header-cell *matHeaderCellDef>État</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="etat">État</th>
         <td mat-cell *matCellDef="let assignment" [ngClass]="{'rendu': assignment.rendu, 'non-rendu': !assignment.rendu}">
           {{assignment.rendu ? "Rendu" : "Non Rendu"}}
         </td>
