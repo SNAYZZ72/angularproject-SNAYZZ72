@@ -45,3 +45,17 @@
     width: 75%;
   }
 }
+
+/* Style CSS */
+@media (min-width: 768px) {
+  .mat-sidenav .dark-mode-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-toolbar .dark-mode-toggle-toolbar {
+    display: none;
+  }
+}
+

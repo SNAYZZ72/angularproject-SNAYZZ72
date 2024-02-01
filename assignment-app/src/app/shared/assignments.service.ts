@@ -70,4 +70,5 @@ export class AssignmentsService {
       rendu: false
     }
   ]
+
 }

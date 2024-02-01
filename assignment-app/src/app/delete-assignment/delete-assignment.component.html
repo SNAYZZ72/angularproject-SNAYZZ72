@@ -1,0 +1,15 @@
+<!-- delete-assignment.component.html -->
+<div class="delete-assignment-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Supprimer l'Assignment</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Êtes-vous sûr de vouloir supprimer cet assignment?</p>
+      <div class="actions">
+        <button mat-button (click)="onDelete()">Supprimer</button>
+        <button mat-button (click)="onCancel()">Annuler</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

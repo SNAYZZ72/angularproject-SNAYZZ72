@@ -16,7 +16,7 @@
       </ng-template>
     </button>
     <span *ngIf="authService.isLogged()">({{ authService.getCurrentUserRole() }})</span>
-    <mat-slide-toggle [formControl]="switchTheme" matTooltip="Mode Sombre">Dark Mode</mat-slide-toggle>
+    <mat-slide-toggle class="dark-mode-toggle" [formControl]="switchTheme" matTooltip="Mode Sombre">Dark Mode</mat-slide-toggle>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -33,12 +33,25 @@
       <a mat-list-item routerLink="/add" routerLinkActive="active" *ngIf="authService.isLogged()" matTooltip="Ajouter un devoir">
         <mat-icon>add_circle_outline</mat-icon> Ajouter un devoir
       </a>
-      <a mat-list-item routerLink="/devoirs/edit" routerLinkActive="active" *ngIf="authService.getCurrentUserRole() === 'admin'" matTooltip="Modifier un devoir">
+      <a mat-list-item routerLink="/edit" routerLinkActive="active" *ngIf="authService.getCurrentUserRole() === 'admin'" matTooltip="Modifier un devoir">
         <mat-icon>edit</mat-icon> Modifier un devoir
       </a>
-      <a mat-list-item routerLink="/devoirs/delete" routerLinkActive="active" *ngIf="authService.getCurrentUserRole() === 'admin'" matTooltip="Supprimer un devoir">
+      <a mat-list-item routerLink="/delete" routerLinkActive="active" *ngIf="authService.getCurrentUserRole() === 'admin'" matTooltip="Supprimer un devoir">
         <mat-icon>delete_outline</mat-icon> Supprimer un devoir
       </a>
+      <a mat-list-item routerLink="/login" routerLinkActive="active" *ngIf="!authService.isLogged()" matTooltip="Connexion">
+        <mat-icon>login</mat-icon> Connexion
+      </a>
+      <a mat-list-item routerLink="/logout" routerLinkActive="active" *ngIf="authService.isLogged()" matTooltip="Déconnexion">
+        <mat-icon>logout</mat-icon> Déconnexion
+      </a>
+      <a mat-list-item routerLink="/register" routerLinkActive="active" *ngIf="!authService.isLogged()" matTooltip="Inscription">
+        <mat-icon>person_add</mat-icon> Inscription
+      </a>
+
+      <mat-divider></mat-divider>
+      <mat-slide-toggle class="dark-mode-toggle" [formControl]="switchTheme" matTooltip="Mode Sombre">Dark Mode</mat-slide-toggle>
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

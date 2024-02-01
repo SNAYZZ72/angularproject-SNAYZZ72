@@ -1,0 +1,16 @@
+.delete-assignment-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mat-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
