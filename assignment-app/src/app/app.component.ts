@@ -12,12 +12,14 @@ import EventEmitter from "node:events";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {OverlayContainer} from "@angular/cdk/overlay";
 import {AuthService} from "./shared/auth.service";
+import {NgIf} from "@angular/common";
+import {MatTooltip} from "@angular/material/tooltip";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatButtonModule, MatIconModule, MatDividerModule, AssignmentsComponent, MatToolbar, MatSidenavModule, MatListModule, MatToolbarRow, MatSlideToggle, ReactiveFormsModule, RouterLink, RouterLinkActive, RouterModule],
+  imports: [RouterOutlet, MatButtonModule, MatIconModule, MatDividerModule, AssignmentsComponent, MatToolbar, MatSidenavModule, MatListModule, MatToolbarRow, MatSlideToggle, ReactiveFormsModule, RouterLink, RouterLinkActive, RouterModule, NgIf, MatTooltip],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -25,11 +27,11 @@ export class AppComponent implements OnInit{
   title = 'assignment-app';
   opened: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(protected authService: AuthService, private router: Router) {}
 
   onLogin() {
-    if (!this.authService.loggedIn) {
-      this.authService.logIn();
+    if (!this.authService.isLogged()) {
+      this.router.navigate(['/login']);
     }
     else {
       this.authService.logOut();

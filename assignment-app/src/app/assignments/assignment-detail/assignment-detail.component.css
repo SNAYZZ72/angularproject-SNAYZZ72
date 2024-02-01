@@ -1,5 +1,12 @@
+/*
 #bottom{
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+}
+*/
+
+.button-spacer {
+  display: inline-block;
+  width: 8px;
 }

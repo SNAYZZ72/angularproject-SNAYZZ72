@@ -7,12 +7,15 @@ import {
   MatDatepickerModule,
   MatDatepickerToggle
 } from "@angular/material/datepicker";
-import {MatFormField, MatSuffix} from "@angular/material/form-field";
+import {MatFormField, MatSuffix, MatError, MatLabel } from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {Assignment} from "../assignement.model";
 import {AssignmentsService} from "../../shared/assignments.service";
 import {Router} from "@angular/router";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatIcon} from "@angular/material/icon";
+import {MatCard, MatCardContent} from "@angular/material/card";
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: 'app-add-assignment',
@@ -26,7 +29,13 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatNativeDateModule,
     MatFormField,
     MatInput,
-    MatSuffix
+    MatSuffix,
+    MatIcon,
+    MatCardContent,
+    MatCard,
+    NgIf,
+    MatError,
+    MatLabel
   ],
   providers: [
     MatNativeDateModule

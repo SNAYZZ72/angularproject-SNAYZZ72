@@ -1,13 +1,29 @@
-<form ngForm (submit)="onSubmit(); assignmentForm.reset()" #assignmentForm class="form">
-  <mat-form-field>
-    <input matInput [(ngModel)]="nomDevoir" placeholder="saisir le nom du devoir" required  name="nom">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="dateDeRendu" placeholder="saisir la date de rendu" required  name="date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <button  mat-stroked-button color="primary">
-    Ajouter un devoir
-  </button>
-</form>
+<mat-card>
+  <mat-card-content>
+    <form ngForm (submit)="onSubmit(); assignmentForm.reset()" #assignmentForm="ngForm" class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Nom du devoir</mat-label>
+        <input matInput placeholder="Saisir le nom du devoir" [(ngModel)]="nomDevoir" required name="nom">
+        <mat-icon matPrefix>assignment</mat-icon>
+        <mat-error *ngIf="assignmentForm.controls['nom']?.invalid && assignmentForm.controls['nom']?.touched">
+          Le nom du devoir est requis
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Date de rendu</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Saisir la date de rendu" [(ngModel)]="dateDeRendu" required name="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-icon matPrefix>event</mat-icon>
+        <mat-error *ngIf="assignmentForm.controls['date']?.invalid && assignmentForm.controls['date']?.touched">
+          La date de rendu est requise
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-stroked-button color="primary" type="submit" [disabled]="assignmentForm.invalid">
+        Ajouter un devoir
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

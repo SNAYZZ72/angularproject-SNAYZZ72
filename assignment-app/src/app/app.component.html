@@ -1,36 +1,48 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <button mat-icon-button (click)="opened=!opened" aria-label="Menu">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span>Assignement Application</span>
-        <span class="spacer"></span>
-        <button mat-icon-button aria-label="Home">
-            <mat-icon>home</mat-icon>
-        </button>
-      <span class="spacer"></span>
-        <button mat-icon-button aria-label="Login">
-            <mat-icon>login</mat-icon>
-        </button>
-        <mat-slide-toggle color="primary" (change)="onLogin()">Login</mat-slide-toggle>
-      <span>
-    <mat-slide-toggle [formControl]="switchTheme">Dark Mode</mat-slide-toggle>
-  </span>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="opened=!opened" aria-label="Menu" matTooltip="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Assignment Application</span>
+    <span class="spacer"></span>
+    <button mat-icon-button routerLink="/home" aria-label="Home" matTooltip="Accueil">
+      <mat-icon>home</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="onLogin()" aria-label="Login/Logout" matTooltip="Connexion/Déconnexion">
+      <mat-icon *ngIf="authService.isLogged(); else loginIcon">{{ authService.getCurrentUserRole() === 'admin' ? 'admin_panel_settings' : 'person' }}</mat-icon>
+      <ng-template #loginIcon>
+        <mat-icon>login</mat-icon>
+      </ng-template>
+    </button>
+    <span *ngIf="authService.isLogged()">({{ authService.getCurrentUserRole() }})</span>
+    <mat-slide-toggle [formControl]="switchTheme" matTooltip="Mode Sombre">Dark Mode</mat-slide-toggle>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav [(opened)]="opened" mode="side">
-        <mat-nav-list>
-            <a mat-list-item routerLink="/home" routerLinkActive="active">Home</a>
-            <a mat-list-item routerLink="/devoirs" routerLinkActive="active">Liste des devoirs</a>
-            <a mat-list-item routerLink="/add" routerLinkActive="active">Ajouter un devoir</a>
-            <a mat-list-item routerLink="/devoirs/edit" routerLinkActive="active">Modifier un devoir</a>
-            <a mat-list-item routerLink="/devoirs/delete" routerLinkActive="active">Supprimer un devoir</a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-        <!--<app-assignments></app-assignments>-->
-    </mat-sidenav-content>
+  <mat-sidenav [(opened)]="opened" mode="side">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/home" routerLinkActive="active" matTooltip="Accueil">
+        <mat-icon>home</mat-icon> Home
+      </a>
+      <a mat-list-item routerLink="/devoirs" routerLinkActive="active" matTooltip="Liste des devoirs">
+        <mat-icon>list</mat-icon> Liste des devoirs
+      </a>
+      <!-- Affichez ou cachez les liens suivants en fonction du rôle de l'utilisateur -->
+      <a mat-list-item routerLink="/add" routerLinkActive="active" *ngIf="authService.isLogged()" matTooltip="Ajouter un devoir">
+        <mat-icon>add_circle_outline</mat-icon> Ajouter un devoir
+      </a>
+      <a mat-list-item routerLink="/devoirs/edit" routerLinkActive="active" *ngIf="authService.getCurrentUserRole() === 'admin'" matTooltip="Modifier un devoir">
+        <mat-icon>edit</mat-icon> Modifier un devoir
+      </a>
+      <a mat-list-item routerLink="/devoirs/delete" routerLinkActive="active" *ngIf="authService.getCurrentUserRole() === 'admin'" matTooltip="Supprimer un devoir">
+        <mat-icon>delete_outline</mat-icon> Supprimer un devoir
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>
+

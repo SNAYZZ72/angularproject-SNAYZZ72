@@ -11,11 +11,12 @@ import { MatNativeDateModule} from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from '../assignments/assignement.model';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 
 @Component({
   selector: 'app-edit-assignment',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule],
+  imports: [CommonModule, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, MatCardContent, MatCardTitle, MatCardHeader, MatCard],
   templateUrl: './edit-assignment.component.html',
   styleUrls: ['./edit-assignment.component.css'],
 })

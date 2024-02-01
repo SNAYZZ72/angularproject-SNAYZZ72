@@ -17,17 +17,27 @@ import {AddAssignmentComponent} from "./add-assignment/add-assignment.component"
 import {AssignmentsService} from "../shared/assignments.service";
 import {Observable, of} from "rxjs";
 import {RouterLink} from "@angular/router";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import {MatToolbar} from "@angular/material/toolbar";
 
 @Component({
   selector: 'app-assignments',
   standalone: true,
-  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, AssignmentDetailComponent, MatListModule, MatDividerModule, AddAssignmentComponent, RouterLink],
+  imports: [CommonModule, RenduDirective, MatButtonModule, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule, AssignmentDetailComponent, MatListModule, MatDividerModule, AddAssignmentComponent, RouterLink, MatColumnDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatTable, MatHeaderRowDef, MatRowDef, MatCellDef, MatHeaderCellDef, MatToolbar],
   templateUrl: './assignments.component.html',
   styleUrl: './assignments.component.css'
 })
 export class AssignmentsComponent implements OnInit {
+  displayedColumns: string[] = ['dateDeRendu', 'nom', 'etat'];
   ngOnInit(): void {
-    //this.assignments= this.assignmentsService.getAssignments();
     this.getAssignments();
   }
   getAssignments(): void {
@@ -38,41 +48,6 @@ export class AssignmentsComponent implements OnInit {
   constructor(private assignmentsService: AssignmentsService) {
   }
 
-  /*onAddAssignment() {
-    this.formVisible = true
-  }
-
-  onNouvelAssignment(event: Assignment) {
-    //this.assignments.push(event)
-    this.assignmentsService.addAssignment(event)
-      .subscribe(message => {
-        console.log(message);
-      });
-
-    this.formVisible = false
-    this.assignmentSelectionne = null;
-  }
-
-  assignmentClique(assignment: Assignment) {
-    this.assignmentSelectionne = assignment
-    console.log("Assignment cliqué : " + assignment.nom)
-  }*/
-
   titre = 'mon application sur les assignments'
-  /*formVisible = false*/
-  assignments: Assignment[] = []
-
-
-  /*assignmentSelectionne!: Assignment*/
-
-/*  handleDelete(assignment: Assignment) {
-    console.log('Suppression de l\'assignment', assignment.nom);
-    const index = this.assignments.indexOf(assignment);
-    this.assignments.splice(index, 1);
-
-    //enlever la selection
-    this.assignmentSelectionne = this.assignments[-1];
-  }*/
-
-
+  assignments: Assignment[] = [];
 }

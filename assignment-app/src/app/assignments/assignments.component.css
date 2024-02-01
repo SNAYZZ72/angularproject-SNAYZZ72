@@ -2,7 +2,7 @@
     color: green;
     background-color: lightgreen;
 }
-.nonRendu{
+.non-rendu{
     color: red;
     background-color: lightcoral;
 }
@@ -13,12 +13,47 @@
   margin: 5px;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
-  margin: 5px;
+  margin: 0;
+  width: 100%;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.assignments-table {
+  margin-top: 20px;
+}
+
+.mat-toolbar {
+  margin-bottom: 10px;
+}
+
+button[routerLink="/add"] {
+  margin-left: 10px;
+}
+
+.routerBtn {
+  margin-bottom: 16px;
+}
+
+.mat-elevation-z8 {
+  overflow: auto;
+  max-height: 600px;
 }
 
 .routerBtn{
   align-self: flex-end;
 }
+
+.mat-toolbar {
+  margin-bottom: 20px;
+}
+
+.actions {
+  margin-bottom: 20px;
+}
+

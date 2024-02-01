@@ -1,13 +1,14 @@
 import {Component, Input, OnInit, Output , EventEmitter} from '@angular/core';
 import {Assignment} from "../assignement.model";
 import {MatCard, MatCardActions, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatButton} from "@angular/material/button";
 import {AssignmentsService} from "../../shared/assignments.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../shared/auth.service";
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-assignment-detail',
@@ -20,21 +21,22 @@ import {AuthService} from "../../shared/auth.service";
     DatePipe,
     MatCheckbox,
     MatCardActions,
-    MatButton
+    MatButton,
+    NgIf,
+    MatIconModule
   ],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent implements OnInit {
-  //@Input() assignmentTransmis !: Assignment ;
-  //@Output() deleteRequest = new EventEmitter<Assignment>();
 
   assignmentTransmis !: Assignment;
 
   constructor(private assignmentsService: AssignmentsService,
              private  activatedRoute: ActivatedRoute,
              private router: Router,
-             private authService: AuthService) { }
+             private authService: AuthService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getAssignment()
@@ -60,24 +62,21 @@ export class AssignmentDetailComponent implements OnInit {
     this.router.navigate(['/home'])
   }
 
-/*  onDeleteAssignment() {
-    console.log("Demande de suppression de l'assignment !");
-    this.deleteRequest.emit(this.assignmentTransmis);
-  }*/
-
   onDelete() {
-    /*    this.assignmentsService.deleteAssignment(this.assignmentTransmis)
-          .subscribe(message => {
+    const confirmation = confirm('Êtes-vous sûr de vouloir supprimer cet assignment ?');
+    if (confirmation) {
+      this.assignmentsService.deleteAssignment(this.assignmentTransmis)
+        .subscribe({
+          next: (message) => {
             console.log(message);
-          });
-
-        this.assignmentTransmis = null;
-      }*/
-    this.assignmentsService.deleteAssignment(this.assignmentTransmis)
-      .subscribe(message => {
-        console.log(message);
-      });
-    this.router.navigate(['/home'])
+            this.router.navigate(['/home']);
+          },
+          error: (err) => {
+            console.error(err);
+            alert('Problème lors de la suppression, veuillez réessayer plus tard');
+          }
+        });
+    }
   }
 
   onClickEdit() {
@@ -91,7 +90,7 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   isAdmin() {
-    return this.authService.loggedIn;
+    return this.authService.isAdmin();
   }
 
 }
